@@ -4,7 +4,7 @@ safe_source () { [[ ! -z ${1:-} ]] && source $1; _dir="$(cd "$(dirname "${BASH_S
 # end of bash boilerplate
 
 echo "Creating Makefile..."
-ln -s $_sdir/Project.mk Makefile
+ln -s ${_sdir#$(pwd)/}/Project.mk Makefile
 
 echo "Creating \"app\" folder..."
 mkdir -p app
