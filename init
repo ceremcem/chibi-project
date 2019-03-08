@@ -1,0 +1,22 @@
+#!/bin/bash
+set -eu -o pipefail
+safe_source () { [[ ! -z ${1:-} ]] && source $1; _dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"; _sdir=$(dirname "$(readlink -f "$0")"); }; safe_source
+# end of bash boilerplate
+
+echo "Creating Makefile..."
+ln -s $_sdir/Project.mk Makefile
+
+echo "Creating \"app\" folder..."
+mkdir -p app
+
+echo 'Creating "main" and "io" files under "app" folder...'
+touch app/main.{c,h}
+touch app/io.{c,h}
+
+echo "Creating \"hw\" folder..."
+mkdir -p hw
+
+echo "Creating \"include\" folder..."
+mkdir -p include
+
+echo "Done."
