@@ -1,8 +1,13 @@
 THIS_DIR:=$(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 
-
 # IMPORTANT: In order to debug, enable the following:
 #USE_VERBOSE_COMPILE := yes
+
+HARDWARE_CONF := ./Hardware
+ifeq (,$(wildcard $(HARDWARE_CONF)))
+  # specify the path to the folder that contains your board.c/h files
+  $(error You need to specify your board.c/h files in your $(HARDWARE_CONF) file)
+endif
 
 # Define project name here
 PROJECT = ch
@@ -10,7 +15,6 @@ PROJECT = ch
 # Imported source files and paths.
 CHIBIOS  := $(HOME)/ChibiOS
 # Use any folder name inside hw folder:
-HARDWARE_CONF := Hardware
 CONFDIR = ./$(shell [ -e $(HARDWARE_CONF) ] && cat $(HARDWARE_CONF) | grep "^[^\#\;]")
 BUILDDIR := ./build
 DEPDIR   := ./.dep
