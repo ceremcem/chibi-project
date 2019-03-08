@@ -5,6 +5,10 @@ This is the boilerplate for starting up a ChibiOS project on Linux.
 # Usage
 
 1. Create your project directory, eg. "myproject"
+
+        mkdir myproject
+        cd myproject 
+        
 2. Add this library as a submodule:
 
         git submodule add https://github.com/ceremcem/chibi-project
