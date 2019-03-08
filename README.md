@@ -22,3 +22,7 @@ This is the boilerplate for starting up a ChibiOS project on Linux.
 
         make write # for only flashing
         make start-debugging # to start debugging your application.
+
+# Example 
+
+See https://github.com/ceremcem/chibi-examples2 as an example usage of this tool.
