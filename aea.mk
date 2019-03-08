@@ -15,7 +15,8 @@ PROJECT = ch
 # Imported source files and paths.
 CHIBIOS  := $(HOME)/ChibiOS
 # Use any folder name inside hw folder:
-CONFDIR = ./$(shell [ -e $(HARDWARE_CONF) ] && cat $(HARDWARE_CONF) | grep "^[^\#\;]")
+MCU_DIR = ./$(shell [ -e $(HARDWARE_CONF) ] && cat $(HARDWARE_CONF) | grep "^[^\#\;]")
+CONFDIR := $(shell dirname $(MCU_DIR))
 BUILDDIR := ./build
 DEPDIR   := ./.dep
 

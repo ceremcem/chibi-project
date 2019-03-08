@@ -96,8 +96,9 @@ endif
 include $(CHIBIOS)/os/license/license.mk
 # HAL-OSAL files (optional).
 include $(CHIBIOS)/os/hal/hal.mk
-include $(CONFDIR)/board.mk
 include $(CHIBIOS)/os/hal/osal/rt/osal.mk
+include $(MCU_DIR)/board.mk
+
 # RTOS files (optional).
 include $(CHIBIOS)/os/rt/rt.mk
 # Other files (optional).
