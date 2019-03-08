@@ -2,6 +2,18 @@
 
 This is the boilerplate for starting up a ChibiOS project on Linux.
 
+# Benefits
+
+1. Automatically a `dependencies.txt` for future-proof builds which does not bloat disk usage.
+2. Provides an easier way to put breakpoints while using `// debugger` lines: 
+        1. Switch to your code editor and place `// debugger` at the end of the line which you want to place a breakpoint.
+        2. Switch to your GDB prompt
+        3. Ctrl+C
+        4. `update-breakpoints` (or `upp` for short)
+        5. Type `c` to continue. 
+3. Ships custom headers that would be useful if they were also included to ChibiOS by default. 
+4. Provides an easy switch for `Debug` and `Release` build targets (see `Target` file)
+
 # Usage
 
 1. Create your project directory, eg. "myproject"
