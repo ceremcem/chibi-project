@@ -4,10 +4,10 @@ This is the boilerplate for starting up a ChibiOS project on Linux.
 
 # Benefits
 
-1. Automatically tracks important dependencies (ChibiOS hash, GCC version) for future-proof builds. 
+1. Automatically tracks important dependencies (ChibiOS hash, GCC version) for [future-proof builds](https://stackoverflow.com/a/54604941/1952991). 
 2. Provides an easier way to put breakpoints while using command line GDB client:
 
-      1. Switch to your code editor and place `// debugger` at the end of the line which you want to place a breakpoint.
+      1. Switch to your code editor and place a `// debugger` comment at the end of the line which you want to place a breakpoint.
       2. Switch to your GDB prompt
       3. Ctrl+C
       4. `update-breakpoints` (or `ub` for short)
