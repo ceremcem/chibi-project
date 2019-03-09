@@ -15,6 +15,12 @@ This is the boilerplate for starting up a ChibiOS project on Linux.
 3. You can share your custom headers (see [`./include`](./include) folder) between your projects.
 4. Provides an easy switch for `Debug` and `Release` build targets (see `Target` file)
 
+# Requirements 
+
+1. Tested only on Linux. 
+2. [stlink](https://github.com/texane/stlink) as the GDB server. 
+3. (Optional) Tmux. 
+
 # Usage
 
 1. Create your project directory, eg. "myproject"
@@ -25,6 +31,7 @@ This is the boilerplate for starting up a ChibiOS project on Linux.
 2. Add this library as a submodule:
 
         git submodule add https://github.com/ceremcem/chibi-project
+        git submodule update --init --recursive
 
 3. Initialize:
 
