@@ -35,7 +35,7 @@
 
 /* Overwrites */
 #define PAL_USE_CALLBACKS                   TRUE
-#define HAL_USE_SERIAL                      TRUE
+//#define HAL_USE_SERIAL                      TRUE
 #define HAL_USE_PWM                         TRUE
 /* End of overwrites */
 
