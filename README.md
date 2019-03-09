@@ -4,7 +4,7 @@ This is the boilerplate for starting up a ChibiOS project on Linux.
 
 # Benefits
 
-1. Automatically a `dependencies.txt` for future-proof builds which does not bloat disk usage.
+1. Automatically tracks important dependencies (ChibiOS hash, GCC version) for future-proof builds. 
 2. Provides an easier way to put breakpoints while using command line GDB client:
 
       1. Switch to your code editor and place `// debugger` at the end of the line which you want to place a breakpoint.
