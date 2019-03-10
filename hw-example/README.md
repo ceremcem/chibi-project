@@ -1,8 +1,3 @@
-# TODO
-
-1. Add the "MCU Family list" location which is to be used in board.h
-2. Add MCU family swap procedure for a project
-
 # Peripheral and physical pin connections
 
 See https://electronics.stackexchange.com/a/422280/20285
@@ -50,3 +45,8 @@ Settings for the exact model of the MCU:
 * Select internal/external clock
 * Enable/disable on-chip peripherals (ADC, CAN, I2C, USART, PWM, ...)
 * etc.
+
+# TODO
+
+1. Add the "MCU Family list" location which is to be used in board.h
+2. Add MCU family swap procedure for a project
