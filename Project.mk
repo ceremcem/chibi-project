@@ -217,6 +217,15 @@ include $(RULESPATH)/rules.mk
 # Custom rules
 #
 
+__FAMILY = $(shell echo $(MCU) | grep cortex-m0 > /dev/null && echo M0)
+#$(info Family is: $(__FAMILY))
+ifeq ($(__FAMILY),M0)
+ifneq ($(GCC_MAJOR),5)
+    $(error GCC > v5 is known to have a bug with Cortex-M0. Prepend custom \
+        version of GCC to the PATH environment variable.)
+endif
+endif
+
 #
 # Custom rules
 ##############################################################################
