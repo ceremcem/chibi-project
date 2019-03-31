@@ -48,6 +48,7 @@ ALLINC += $(APPDIR)
 CHIBIOS_BRANCH := $(shell cd ${CHIBIOS} && git branch | grep \* | cut -d ' ' -f2)
 CHIBIOS_COMMIT := $(shell cd ${CHIBIOS} && git rev-parse HEAD)
 GCC_VERSION := $(shell gcc --version | grep ^gcc | sed 's/^.* //g')
+GCC_MAJOR := $(shell echo $(GCC_VERSION) | cut -d'.' -f1)
 
 DEPS_DB := $(CURDIR)/dependencies.txt
 
