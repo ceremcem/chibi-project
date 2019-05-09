@@ -217,12 +217,46 @@ include $(RULESPATH)/rules.mk
 # Custom rules
 #
 
+ifeq ($(CC),)
+	$(error No C Compiler can be found. PATH: $(PATH))
+endif
+
+# Take a note for the dependencies
+CHIBIOS_BRANCH := $(shell cd ${CHIBIOS} && git branch | grep \* | cut -d ' ' -f2)
+CHIBIOS_COMMIT := $(shell cd ${CHIBIOS} && git rev-parse HEAD)
+GCC_VERSION := $(shell $(CC) -dumpversion)
+GCC_MAJOR := $(shell echo $(GCC_VERSION) | cut -d'.' -f1)
+
+
+PRE_MAKE_ALL_RULE_HOOK:
+	@true > $(DEPS_DB)
+	@echo "ChibiOS/$(CHIBIOS_BRANCH) $(CHIBIOS_COMMIT)" >> $(DEPS_DB)
+	@echo "GCC $(GCC_VERSION)" >> $(DEPS_DB)
+	@if [ ! -f Target ]; then echo "Release" > Target; fi
+
+POST_MAKE_ALL_RULE_HOOK:
+	@if [ $(OPTIMIZATION_LEVEL) -lt 2 ]; then \
+		echo "------------------------------------------------------"; \
+		echo -n "WARNING: Optimization level is: $(OPTIMIZATION_LEVEL)"; \
+		echo " [Target: Debug]"; \
+		echo "------------------------------------------------------"; \
+	fi
+
+CLEAN_RULE_HOOK:
+	@echo "Cleanup hook..."
+	@echo
+	@find $(CURDIR) -iname '*.gch' -exec rm {} \;
+	@rm $(CURDIR)/_breakpoints.txt 2> /dev/null || true
+	@rm $(CURDIR)/core 2> /dev/null || true
+
+
+GCC_M0_LIMIT := 5 # https://github.com/ceremcem/chibi-project/issues/1
 __FAMILY = $(shell echo $(MCU) | grep cortex-m0 > /dev/null && echo M0)
 #$(info Family is: $(__FAMILY))
 ifeq ($(__FAMILY),M0)
-ifneq ($(GCC_MAJOR),5)
-    $(error GCC > v5 is known to have a bug with Cortex-M0. Prepend custom \
-        version of GCC to the PATH environment variable.)
+ifeq ($(shell test $(GCC_MAJOR) -gt $(GCC_M0_LIMIT); echo $$?),0)
+$(error GCC > v$(GCC_M0_LIMIT).x.x ($(GCC_VERSION)) is known to have a bug with Cortex-M0. Prepend custom \
+	version of GCC to the PATH environment variable.)
 endif
 endif
 

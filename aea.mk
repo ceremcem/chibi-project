@@ -44,12 +44,6 @@ ALLINC += $(APPDIR)
 
 .DEFAULT_GOAL := all
 
-# Take a note for the dependencies
-CHIBIOS_BRANCH := $(shell cd ${CHIBIOS} && git branch | grep \* | cut -d ' ' -f2)
-CHIBIOS_COMMIT := $(shell cd ${CHIBIOS} && git rev-parse HEAD)
-GCC_VERSION := $(shell gcc --version | grep ^gcc | sed 's/^.* //g')
-GCC_MAJOR := $(shell echo $(GCC_VERSION) | cut -d'.' -f1)
-
 DEPS_DB := $(CURDIR)/dependencies.txt
 
 BUILD_TARGET := $(shell [ -e Target ] && cat Target | grep "^[^\#\;]")
@@ -58,26 +52,5 @@ ifeq ("$(BUILD_TARGET)","Debug")
 else
 	OPTIMIZATION_LEVEL = 2
 endif
-
-PRE_MAKE_ALL_RULE_HOOK:
-	@true > $(DEPS_DB)
-	@echo "ChibiOS/$(CHIBIOS_BRANCH) $(CHIBIOS_COMMIT)" >> $(DEPS_DB)
-	@echo "GCC $(GCC_VERSION)" >> $(DEPS_DB)
-	@if [ ! -f Target ]; then echo "Release" > Target; fi
-
-POST_MAKE_ALL_RULE_HOOK:
-	@if [ $(OPTIMIZATION_LEVEL) -lt 2 ]; then \
-		echo "------------------------------------------------------"; \
-		echo -n "WARNING: Optimization level is: $(OPTIMIZATION_LEVEL)"; \
-		echo " [Target: Debug]"; \
-		echo "------------------------------------------------------"; \
-	fi
-
-CLEAN_RULE_HOOK:
-	@echo "Cleanup hook..."
-	@echo
-	@find $(CURDIR) -iname '*.gch' -exec rm {} \;
-	@rm $(CURDIR)/_breakpoints.txt 2> /dev/null || true
-	@rm $(CURDIR)/core 2> /dev/null || true
 
 include $(THIS_DIR)/mcu-debug/main.mk
