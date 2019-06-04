@@ -10,8 +10,6 @@ ifeq (,$(wildcard $(CHIBI_PROJECT_CONFIG)))
 endif
 include $(CHIBI_PROJECT_CONFIG)
 
-export PATH := $(GCC_Path):$(PATH)
-
 # Define project name here
 PROJECT = ch
 

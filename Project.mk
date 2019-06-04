@@ -153,7 +153,7 @@ INCDIR = $(ALLINC) $(TESTINC) $(CONFDIR)
 #
 
 #TRGT = arm-elf-
-TRGT = arm-none-eabi-
+TRGT = $(GCC_Path)arm-none-eabi-
 CC   = $(TRGT)gcc
 CPPC = $(TRGT)g++
 # Enable loading with g++ only if you need C++ runtime support.
@@ -228,7 +228,6 @@ CHIBIOS_BRANCH := $(shell cd ${CHIBIOS} && git branch | grep \* | cut -d ' ' -f2
 CHIBIOS_COMMIT := $(shell cd ${CHIBIOS} && git rev-parse HEAD)
 GCC_VERSION := $(shell $(CC) -dumpversion)
 GCC_MAJOR := $(shell echo $(GCC_VERSION) | cut -d'.' -f1)
-
 
 PRE_MAKE_ALL_RULE_HOOK:
 	@true > $(DEPS_DB)
