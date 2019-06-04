@@ -3,11 +3,14 @@ THIS_DIR:=$(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 # IMPORTANT: In order to debug, enable the following:
 #USE_VERBOSE_COMPILE := yes
 
-HARDWARE_CONF := ./Hardware
-ifeq (,$(wildcard $(HARDWARE_CONF)))
+CHIBI_PROJECT_CONFIG := ./config.mk
+ifeq (,$(wildcard $(CHIBI_PROJECT_CONFIG)))
   # specify the path to the folder that contains your board.c/h files
-  $(error You need to specify your board.c/h files in your $(HARDWARE_CONF) file)
+  $(error No config file can be found. Use config.mk.sample as the template.)
 endif
+include $(CHIBI_PROJECT_CONFIG)
+
+export PATH := $(GCC_Path):$(PATH)
 
 # Define project name here
 PROJECT = ch
@@ -15,7 +18,7 @@ PROJECT = ch
 # Imported source files and paths.
 CHIBIOS  := $(HOME)/ChibiOS
 # Use any folder name inside hw folder:
-MCU_DIR = ./$(shell [ -e $(HARDWARE_CONF) ] && cat $(HARDWARE_CONF) | grep "^[^\#\;]")
+MCU_DIR = ./$(Hardware)
 CONFDIR := $(shell dirname $(MCU_DIR))
 BUILDDIR := ./build
 DEPDIR   := ./.dep
@@ -46,7 +49,7 @@ ALLINC += $(APPDIR)
 
 DEPS_DB := $(CURDIR)/dependencies.txt
 
-BUILD_TARGET := $(shell [ -e Target ] && cat Target | grep "^[^\#\;]")
+BUILD_TARGET := $(Target)
 ifeq ("$(BUILD_TARGET)","Debug")
 	OPTIMIZATION_LEVEL = 0
 else
