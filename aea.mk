@@ -10,11 +10,18 @@ ifeq (,$(wildcard $(CHIBI_PROJECT_CONFIG)))
 endif
 include $(CHIBI_PROJECT_CONFIG)
 
+ifneq (,$(GCC_Path))
+	GCC_Path := $(GCC_Path)/
+endif
+
 # Define project name here
 PROJECT = ch
 
 # Imported source files and paths.
-CHIBIOS  := $(HOME)/ChibiOS
+ifeq (,$(ChibiOS_Path))
+	ChibiOS_Path := $(HOME)/ChibiOS
+endif
+CHIBIOS  := $(ChibiOS_Path)
 # Use any folder name inside hw folder:
 MCU_DIR = ./$(Hardware)
 CONFDIR := $(shell dirname $(MCU_DIR))
