@@ -5,6 +5,9 @@ Target          := Debug
 
 # Hardware configuration files path
 # Default: None, required. 
+# 
+# NOTICE: Kernel configuration files (chconf, halconf) must be placed 
+# inside the parent folder of $(HARDWARE) folder
 Hardware        := hw/f030
 
 # GCC Path 
