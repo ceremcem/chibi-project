@@ -6,7 +6,7 @@ THIS_DIR:=$(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 CHIBI_PROJECT_CONFIG := ./config.mk
 ifeq (,$(wildcard $(CHIBI_PROJECT_CONFIG)))
   # specify the path to the folder that contains your board.c/h files
-  $(error No config file can be found. Use config.mk.sample as the template.)
+  $(error No config file can be found. Use config.sample.mk as the template.)
 endif
 include $(CHIBI_PROJECT_CONFIG)
 
@@ -23,6 +23,9 @@ ifeq (,$(ChibiOS_Path))
 endif
 CHIBIOS  := $(ChibiOS_Path)
 # Use any folder name inside hw folder:
+ifeq (,$(Hardware))
+$(error Hardware declaration is missing.)
+endif
 MCU_DIR = ./$(Hardware)
 CONFDIR := $(shell dirname $(MCU_DIR))
 BUILDDIR := ./build
@@ -46,7 +49,10 @@ ALLINC += $(PR_SRCINC)
 
 # Software level IO configuration
 #
-APPDIR := $(CURDIR)/app
+ifeq (,$(App))
+	App := $(CURDIR)/app
+endif
+APPDIR := $(App)
 ALLCSRC += $(APPDIR)/io.c
 ALLINC += $(APPDIR)
 
@@ -55,10 +61,12 @@ ALLINC += $(APPDIR)
 DEPS_DB := $(CURDIR)/dependencies.txt
 
 BUILD_TARGET := $(Target)
-ifeq ("$(BUILD_TARGET)","Debug")
-	OPTIMIZATION_LEVEL = 0
-else
+ifeq ("$(BUILD_TARGET)","Release")
 	OPTIMIZATION_LEVEL = 2
+else ifeq ("$(BUILD_TARGET)","Debug")
+	OPTIMIZATION_LEVEL = 0
+else 
+$(error Target must be Debug or Release.)
 endif
 
 include $(THIS_DIR)/mcu-debug/main.mk
