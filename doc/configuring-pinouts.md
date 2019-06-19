@@ -11,7 +11,7 @@ Procedural way to assign peripherals to physical pins is as follows:
   1. Decide which peripheral to use (USARTx, SPIx, PWMx/y (=TIMx_CHy)). 
   2. Decide whether if you want to use the peripheral with its default pinouts or alternative pinouts. (A peripheral might have optional physical connections inside MCU. Refer to REMAP (or similar) column of Pinouts Table)
   3. Wire the peripheral's input(s) and/or output(s) to the physical pins you have chosen in the previous step. (see "GPIO configurations of the device peripherals" section in the RM.)
-      1. Inputs: If the peripheral has inputs, they are [already wired to the physical pins internally][3], so you only need to configure as input with pull-up/pull-down/floating mode by GPIO_CR.
+      1. Inputs: Enable the "Alternate Function Output" (despite the confusing word "output") in GPIO_CR.
       2. Outputs: Enable the "Alternate Function Output" in GPIO_CR. 
       3. If more than one on-chip peripheral outputs are listed in the same physical pin column, then **you have to** refer to further registers  to select which peripheral to enable (or see the default peripheral). Specific alternate function (peripheral) is selected via:
           1. AFIO_MAPR register for STM32F1xx
