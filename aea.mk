@@ -3,19 +3,30 @@ THIS_DIR:=$(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 # IMPORTANT: In order to debug, enable the following:
 #USE_VERBOSE_COMPILE := yes
 
-HARDWARE_CONF := ./Hardware
-ifeq (,$(wildcard $(HARDWARE_CONF)))
+CHIBI_PROJECT_CONFIG := ./config.mk
+ifeq (,$(wildcard $(CHIBI_PROJECT_CONFIG)))
   # specify the path to the folder that contains your board.c/h files
-  $(error You need to specify your board.c/h files in your $(HARDWARE_CONF) file)
+  $(error No config file can be found. Use config.sample.mk as the template.)
+endif
+include $(CHIBI_PROJECT_CONFIG)
+
+ifneq (,$(GCC_Path))
+	GCC_Path := $(GCC_Path)/
 endif
 
 # Define project name here
 PROJECT = ch
 
 # Imported source files and paths.
-CHIBIOS  := $(HOME)/ChibiOS
+ifeq (,$(ChibiOS_Path))
+	ChibiOS_Path := $(HOME)/ChibiOS
+endif
+CHIBIOS  := $(ChibiOS_Path)
 # Use any folder name inside hw folder:
-MCU_DIR = ./$(shell [ -e $(HARDWARE_CONF) ] && cat $(HARDWARE_CONF) | grep "^[^\#\;]")
+ifeq (,$(Hardware))
+$(error Hardware declaration is missing.)
+endif
+MCU_DIR = ./$(Hardware)
 CONFDIR := $(shell dirname $(MCU_DIR))
 BUILDDIR := ./build
 DEPDIR   := ./.dep
@@ -38,45 +49,24 @@ ALLINC += $(PR_SRCINC)
 
 # Software level IO configuration
 #
-APPDIR := $(CURDIR)/app
+ifeq (,$(App))
+	App := $(CURDIR)/app
+endif
+APPDIR := $(App)
 ALLCSRC += $(APPDIR)/io.c
 ALLINC += $(APPDIR)
 
 .DEFAULT_GOAL := all
 
-# Take a note for the dependencies
-CHIBIOS_BRANCH := $(shell cd ${CHIBIOS} && git branch | grep \* | cut -d ' ' -f2)
-CHIBIOS_COMMIT := $(shell cd ${CHIBIOS} && git rev-parse HEAD)
-GCC_VERSION := $(shell gcc --version | grep ^gcc | sed 's/^.* //g')
-
 DEPS_DB := $(CURDIR)/dependencies.txt
 
-BUILD_TARGET := $(shell [ -e Target ] && cat Target | grep "^[^\#\;]")
-ifeq ("$(BUILD_TARGET)","Debug")
-	OPTIMIZATION_LEVEL = 0
-else
+BUILD_TARGET := $(Target)
+ifeq ("$(BUILD_TARGET)","Release")
 	OPTIMIZATION_LEVEL = 2
+else ifeq ("$(BUILD_TARGET)","Debug")
+	OPTIMIZATION_LEVEL = 0
+else 
+$(error Target must be Debug or Release.)
 endif
-
-PRE_MAKE_ALL_RULE_HOOK:
-	@true > $(DEPS_DB)
-	@echo "ChibiOS/$(CHIBIOS_BRANCH) $(CHIBIOS_COMMIT)" >> $(DEPS_DB)
-	@echo "GCC $(GCC_VERSION)" >> $(DEPS_DB)
-	@if [ ! -f Target ]; then echo "Release" > Target; fi
-
-POST_MAKE_ALL_RULE_HOOK:
-	@if [ $(OPTIMIZATION_LEVEL) -lt 2 ]; then \
-		echo "------------------------------------------------------"; \
-		echo -n "WARNING: Optimization level is: $(OPTIMIZATION_LEVEL)"; \
-		echo " [Target: Debug]"; \
-		echo "------------------------------------------------------"; \
-	fi
-
-CLEAN_RULE_HOOK:
-	@echo "Cleanup hook..."
-	@echo
-	@find $(CURDIR) -iname '*.gch' -exec rm {} \;
-	@rm $(CURDIR)/_breakpoints.txt 2> /dev/null || true
-	@rm $(CURDIR)/core 2> /dev/null || true
 
 include $(THIS_DIR)/mcu-debug/main.mk
