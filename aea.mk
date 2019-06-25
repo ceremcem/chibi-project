@@ -56,6 +56,13 @@ APPDIR := $(App)
 ALLCSRC += $(APPDIR)/io.c
 ALLINC += $(APPDIR)
 
+# Dynamically import all source files under APP_DIR/deps
+APP_DEP_SRCDIR := $(APPDIR)/deps
+APP_DEP_SRCS   = $(shell find $(APP_DEP_SRCDIR) -name '*.$(SRCEXT)')
+APP_DEP_SRCINC = $(shell find $(APP_DEP_SRCDIR) -type d)
+ALLCSRC += $(APP_DEP_SRCS)
+ALLINC += $(APP_DEP_SRCINC)
+
 .DEFAULT_GOAL := all
 
 DEPS_DB := $(CURDIR)/dependencies.txt
