@@ -24,20 +24,26 @@
 #define GPIOA_SWCLK                 14u
 
 // defaults, see Reference Manual, 8.4
+// MODER
 #define GPIOA_MODER_DEFAULT                 (PIN_MODE_ALTERNATE(GPIOA_SWDIO) \
                                                 | PIN_MODE_ALTERNATE(GPIOA_SWCLK) \
                                                 )
 #define GPIOx_MODER_DEFAULT                 0
+// OTYPER
 #define GPIOA_OTYPER_DEFAULT                0
 #define GPIOx_OTYPER_DEFAULT                0
+// OSPEEDR
 #define GPIOA_OSPEEDR_DEFAULT               PIN_OSPEED_40M(GPIOA_SWDIO)
 #define GPIOx_OSPEEDR_DEFAULT               0
+// PUPDR
 #define GPIOA_PUPDR_DEFAULT                 (PIN_PUPDR_PULLDOWN(GPIOA_SWCLK) \
                                                 | PIN_PUPDR_PULLUP(GPIOA_SWDIO) \
                                                 )
 #define GPIOx_PUPDR_DEFAULT                 0
+// ODR
 #define GPIOA_ODR_DEFAULT                   0
 #define GPIOx_ODR_DEFAULT                   0
+// AFRx
 #define GPIOA_AFRL_DEFAULT                  0
 #define GPIOA_AFRH_DEFAULT                  0
 #define GPIOx_AFRL_DEFAULT                  0
