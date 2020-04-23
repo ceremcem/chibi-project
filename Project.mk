@@ -250,12 +250,14 @@ CLEAN_RULE_HOOK:
 	@rm $(CURDIR)/core 2> /dev/null || true
 
 
-GCC_M0_LIMIT := 5 # https://github.com/ceremcem/chibi-project/issues/1
+# https://github.com/ceremcem/chibi-project/issues/1
+GCC_M0_MAX := 5
+GCC_M0_MIN := 8
 __FAMILY = $(shell echo $(MCU) | grep cortex-m0 > /dev/null && echo M0)
 #$(info Family is: $(__FAMILY))
 ifeq ($(__FAMILY),M0)
-ifeq ($(shell test $(GCC_MAJOR) -gt $(GCC_M0_LIMIT); echo $$?),0)
-$(error GCC > v$(GCC_M0_LIMIT).x.x ($(GCC_VERSION)) is known to have a bug with Cortex-M0. Prepend custom \
+ifeq ($(shell test $(GCC_MAJOR) -gt $(GCC_M0_MAX) && test $(GCC_MAJOR) -lt $(GCC_M0_MIN) ; echo $$?),0)
+$(error GCC >v$(GCC_M0_MAX).x.x and <v$(GCC_M0_MIN).x.x ($(GCC_VERSION)) is known to have a bug with Cortex-M0. Prepend custom \
 	version of GCC to the PATH environment variable.)
 endif
 endif
