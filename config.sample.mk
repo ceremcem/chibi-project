@@ -21,3 +21,7 @@ ChibiOS_Path    := /path/to/ChibiOS
 # Application Path 
 # Default: ./app
 App             := ./app/some-variant
+
+# GDB address 
+# Default: localhost:4242
+GDB_Addr 		:=
