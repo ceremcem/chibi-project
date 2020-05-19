@@ -21,7 +21,11 @@ PROJECT = ch
 ifeq (,$(ChibiOS_Path))
 	ChibiOS_Path := $(HOME)/ChibiOS
 endif
-CHIBIOS  := $(ChibiOS_Path)
+CHIBIOS  := ./ChibiOS
+ifeq (,$(wildcard $(CHIBIOS)/.))
+	_HEY:=$(shell ln -s $(ChibiOS_Path) $(CHIBIOS))
+endif
+
 # Use any folder name inside hw folder:
 ifeq (,$(Hardware))
 $(error Hardware declaration is missing.)
