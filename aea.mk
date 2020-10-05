@@ -11,6 +11,7 @@ endif
 include $(CHIBI_PROJECT_CONFIG)
 
 ifneq (,$(GCC_Path))
+	# add a path separator at the end
 	GCC_Path := $(GCC_Path)/
 endif
 
@@ -23,7 +24,7 @@ ifeq (,$(ChibiOS_Path))
 endif
 CHIBIOS  := ./ChibiOS
 ifeq (,$(wildcard $(CHIBIOS)/.))
-	_HEY:=$(shell ln -s $(ChibiOS_Path) $(CHIBIOS))
+	_HEY:=$(shell ln -sf $(ChibiOS_Path) $(CHIBIOS))
 endif
 
 # Use any folder name inside hw folder:
