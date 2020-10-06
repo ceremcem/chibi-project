@@ -62,7 +62,7 @@ App := $(App:/=)
 App := $(App)/
 
 APPDIR := $(App)
-ALLCSRC += $(APPDIR)/io.c
+ALLCSRC += $(APPDIR)io.c
 ALLINC += $(APPDIR)
 
 # Dynamically import all source files under APP_DIR/deps
