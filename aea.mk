@@ -57,6 +57,10 @@ ALLINC += $(PR_SRCINC)
 ifeq (,$(App))
 	App := $(CURDIR)/app
 endif
+# Ensure that a / character is placed at the end
+App := $(App:/=)
+App := $(App)/
+
 APPDIR := $(App)
 ALLCSRC += $(APPDIR)/io.c
 ALLINC += $(APPDIR)
