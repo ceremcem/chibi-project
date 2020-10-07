@@ -88,3 +88,5 @@ $(error Target must be Debug or Release.)
 endif
 
 include $(THIS_DIR)/mcu-debug/main.mk
+
+_chibi_project_tests: _mcu_debug_tests
