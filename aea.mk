@@ -82,7 +82,7 @@ BUILD_TARGET := $(Target)
 ifeq ("$(BUILD_TARGET)","Release")
 	OPTIMIZATION_LEVEL = 2
 else ifeq ("$(BUILD_TARGET)","Debug")
-	OPTIMIZATION_LEVEL = 0
+	OPTIMIZATION_LEVEL = g
 else 
 $(error Target must be Debug or Release.)
 endif

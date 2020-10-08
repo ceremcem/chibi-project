@@ -235,7 +235,7 @@ PRE_MAKE_ALL_RULE_HOOK:
 	@echo "GCC $(GCC_VERSION)" >> $(DEPS_DB)
 
 POST_MAKE_ALL_RULE_HOOK:
-	@if [ $(OPTIMIZATION_LEVEL) -lt 2 ]; then \
+	@if [ "$(OPTIMIZATION_LEVEL)" != "2" ]; then \
 		echo "------------------------------------------------------"; \
 		echo -n "WARNING: Optimization level is: $(OPTIMIZATION_LEVEL)"; \
 		echo " [Target: $(Target)]"; \
