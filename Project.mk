@@ -228,11 +228,13 @@ CHIBIOS_BRANCH := $(shell cd ${CHIBIOS} && git branch | grep \* | cut -d ' ' -f2
 CHIBIOS_COMMIT := $(shell cd ${CHIBIOS} && git rev-parse HEAD)
 GCC_VERSION := $(shell $(CC) -dumpversion)
 GCC_MAJOR := $(shell echo $(GCC_VERSION) | cut -d'.' -f1)
+STLINK_VERSION := $(shell st-util --version)
 
 PRE_MAKE_ALL_RULE_HOOK:
 	@true > $(DEPS_DB)
 	@echo "ChibiOS/$(CHIBIOS_BRANCH) $(CHIBIOS_COMMIT)" >> $(DEPS_DB)
 	@echo "GCC $(GCC_VERSION)" >> $(DEPS_DB)
+	@echo "STLink $(STLINK_VERSION)" >> $(DEPS_DB)
 
 POST_MAKE_ALL_RULE_HOOK:
 	@if [ "$(OPTIMIZATION_LEVEL)" != "2" ]; then \
