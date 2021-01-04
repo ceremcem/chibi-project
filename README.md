@@ -15,11 +15,14 @@ This is the boilerplate for starting up a ChibiOS project on Linux.
 3. You can share your custom headers (see [`./include`](./include) folder) between your projects.
 4. Provides an easy switch for `Debug` and `Release` build targets (see `Target` file)
 
+Tested only on Linux. 
+
 # Requirements 
 
-1. Tested only on Linux. 
-2. [stlink](https://github.com/texane/stlink) as the GDB server. 
-3. (Optional) Tmux. 
+1. [STLink](https://github.com/texane/stlink) as the GDB server. 
+2. (Optional) Get arm-none-eabi binaries from [developer.arm.com](https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-rm/downloads/)
+    2.1. Depends: "libncurses5, libncurses5:i386" (Recommended: Use [`create-virtual-deps.sh`](https://github.com/ceremcem/multistrap-helpers/blob/cf25ede775110d71b5ea6d3e70049e82576aa2c7/install-to-disk/debian-notes/package-control/create-virtual-deps.sh))
+3. (Recommended) Tmux. 
 
 # Usage
 
