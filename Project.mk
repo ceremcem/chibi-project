@@ -153,7 +153,7 @@ INCDIR = $(ALLINC) $(TESTINC) $(CONFDIR)
 #
 
 #TRGT = arm-elf-
-TRGT = $(GCC_Path)arm-none-eabi-
+TRGT = $(GCC_PATH)arm-none-eabi-
 CC   = $(TRGT)gcc
 CPPC = $(TRGT)g++
 # Enable loading with g++ only if you need C++ runtime support.

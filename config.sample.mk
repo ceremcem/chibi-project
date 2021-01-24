@@ -12,7 +12,7 @@ Hardware        := hw/f030
 
 # GCC Path 
 # Default: System wide installation
-GCC_Path        := $(HOME)/gcc/gcc-arm-none-eabi-5_3-2016q1/bin
+GCC_PATH        := $(HOME)/gcc/gcc-arm-none-eabi-5_3-2016q1/bin
 
 # ChibiOS Path 
 # Default: $(HOME)/ChibiOS
@@ -24,4 +24,10 @@ App             := ./app/some-variant
 
 # GDB address 
 # Default: localhost:4242
-GDB_Addr 		:=
+GDB_ADDR 		:= localhost:4242
+
+# Flasher application to use
+# Possible values: 
+# 		* openocd
+#       * stlink (default)
+FLASHER		:= openocd

@@ -10,9 +10,9 @@ ifeq (,$(wildcard $(CHIBI_PROJECT_CONFIG)))
 endif
 include $(CHIBI_PROJECT_CONFIG)
 
-ifneq (,$(GCC_Path))
+ifneq (,$(GCC_PATH))
 	# add a path separator at the end
-	GCC_Path := $(GCC_Path)/
+	GCC_PATH := $(GCC_PATH)/
 endif
 
 # Define project name here
